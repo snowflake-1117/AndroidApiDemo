@@ -40,11 +40,12 @@ class Animation2 : Activity(), AdapterView.OnItemSelectedListener {
         mFlipper!!.startFlipping()
 
         val s = findViewById<View>(R.id.spinner) as Spinner
-        val adapter = ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, mStrings)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        s.adapter = adapter
-        s.onItemSelectedListener = this
+        ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, mStrings).let{
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            s.adapter = it
+            s.onItemSelectedListener = this
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>, v: View, position: Int, id: Long) {
