@@ -36,12 +36,12 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.animation_3)
 
-        val s = findViewById<View>(R.id.spinner) as Spinner
+        val spinner = findViewById<View>(R.id.spinner) as Spinner
         ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, INTERPOLATORS).let {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            s.adapter = it
-            s.onItemSelectedListener = this
+            spinner.adapter = it
+            spinner.onItemSelectedListener = this
         }
     }
 
@@ -49,7 +49,7 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
         val target = findViewById<View>(R.id.target)
         val targetParent = target.parent as View
 
-        val a = TranslateAnimation(0.0f,
+        val animation = TranslateAnimation(0.0f,
                 (targetParent.width - target.width - targetParent.paddingLeft -
                         targetParent.paddingRight).toFloat(), 0.0f, 0.0f).apply {
             duration = 1000
@@ -59,23 +59,23 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
         }
 
         when (position) {
-            0 -> a.interpolator = AnimationUtils.loadInterpolator(this,
+            0 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
                     android.R.anim.accelerate_interpolator)
-            1 -> a.interpolator = AnimationUtils.loadInterpolator(this,
+            1 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
                     android.R.anim.decelerate_interpolator)
-            2 -> a.interpolator = AnimationUtils.loadInterpolator(this,
+            2 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
                     android.R.anim.accelerate_decelerate_interpolator)
-            3 -> a.interpolator = AnimationUtils.loadInterpolator(this,
+            3 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
                     android.R.anim.anticipate_interpolator)
-            4 -> a.interpolator = AnimationUtils.loadInterpolator(this,
+            4 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
                     android.R.anim.overshoot_interpolator)
-            5 -> a.interpolator = AnimationUtils.loadInterpolator(this,
+            5 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
                     android.R.anim.anticipate_overshoot_interpolator)
-            6 -> a.interpolator = AnimationUtils.loadInterpolator(this,
+            6 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
                     android.R.anim.bounce_interpolator)
         }
 
-        target.startAnimation(a)
+        target.startAnimation(animation)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {}

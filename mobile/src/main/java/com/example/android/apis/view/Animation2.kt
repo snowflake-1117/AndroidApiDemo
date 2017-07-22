@@ -43,12 +43,12 @@ class Animation2 : Activity(), AdapterView.OnItemSelectedListener {
         mFlipper = this.findViewById<View>(R.id.flipper) as ViewFlipper
         mFlipper!!.startFlipping()
 
-        val s = findViewById<View>(R.id.spinner) as Spinner
+        val spinner = findViewById<View>(R.id.spinner) as Spinner
         ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, mStrings).let{
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            s.adapter = it
-            s.onItemSelectedListener = this
+            spinner.adapter = it
+            spinner.onItemSelectedListener = this
         }
     }
 
