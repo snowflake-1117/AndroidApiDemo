@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:singleLine="true"
-        android:password="true"
+        android:inputType="numberPassword"
     />
 
     <Button android:id="@+id/login"
