@@ -37,11 +37,12 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
         setContentView(R.layout.animation_3)
 
         val s = findViewById<View>(R.id.spinner) as Spinner
-        val adapter = ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, INTERPOLATORS)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        s.adapter = adapter
-        s.onItemSelectedListener = this
+        ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, INTERPOLATORS).let {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            s.adapter = it
+            s.onItemSelectedListener = this
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>, v: View, position: Int, id: Long) {
