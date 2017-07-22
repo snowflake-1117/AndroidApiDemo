@@ -6,3 +6,10 @@
 /build
 /gradle
 /captures
+.idea
+build/
+.DS_Store
+*.iml
+*.apk
+*.aar
+*.zip
