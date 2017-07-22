@@ -32,6 +32,10 @@ import android.widget.ViewFlipper
 
 class Animation2 : Activity(), AdapterView.OnItemSelectedListener {
 
+    private val mStrings = arrayOf("Push up", "Push left", "Cross fade", "Hyperspace")
+
+    private var mFlipper: ViewFlipper? = null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.animation_2)
@@ -79,9 +83,4 @@ class Animation2 : Activity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {}
-
-    private val mStrings = arrayOf("Push up", "Push left", "Cross fade", "Hyperspace")
-
-    private var mFlipper: ViewFlipper? = null
-
 }
