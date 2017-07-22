@@ -51,11 +51,12 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
 
         val a = TranslateAnimation(0.0f,
                 (targetParent.width - target.width - targetParent.paddingLeft -
-                        targetParent.paddingRight).toFloat(), 0.0f, 0.0f)
-        a.duration = 1000
-        a.startOffset = 300
-        a.repeatMode = Animation.RESTART
-        a.repeatCount = Animation.INFINITE
+                        targetParent.paddingRight).toFloat(), 0.0f, 0.0f).apply {
+            duration = 1000
+            startOffset = 300
+            repeatMode = Animation.RESTART
+            repeatCount = Animation.INFINITE
+        }
 
         when (position) {
             0 -> a.interpolator = AnimationUtils.loadInterpolator(this,
