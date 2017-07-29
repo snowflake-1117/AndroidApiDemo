@@ -14,28 +14,26 @@
  * limitations under the License.
  */
 
-package com.example.android.apis.view;
+package com.example.android.apis.view
 
-import com.example.android.apis.R;
+import com.example.android.apis.R
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.app.Activity
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import kotlinx.android.synthetic.main.autocomplete_3.*
 
 
-public class AutoComplete2 extends Activity {
+class AutoComplete3 : Activity() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.autocomplete_2);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.autocomplete_3)
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        val adapter = ArrayAdapter(this,
                 android.R.layout.simple_dropdown_item_1line,
-                AutoComplete1.COUNTRIES);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                findViewById(R.id.edit);
-        textView.setAdapter(adapter);
+                AutoComplete1.COUNTRIES)
+        edit.run { setAdapter(adapter) }
+        edit2.run { setAdapter(adapter) }
     }
 }

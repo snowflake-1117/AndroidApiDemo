@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package com.example.android.apis.view;
+package com.example.android.apis.view
 
-import com.example.android.apis.R;
+import com.example.android.apis.R
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
+import android.app.Activity
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import kotlinx.android.synthetic.main.linear_layout_9.*
 
 /**
  * Demonstrates how the layout_weight attribute can shrink an element too big
  * to fit on screen.
  */
-public class LinearLayout9 extends Activity {
+class LinearLayout9 : Activity() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.linear_layout_9);
-        ListView list = (ListView) findViewById(R.id.list);
-        list.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, AutoComplete1.COUNTRIES));
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.linear_layout_9)
+        list.run {
+            adapter = ArrayAdapter(this@LinearLayout9,
+                    android.R.layout.simple_list_item_1, AutoComplete1.COUNTRIES)
+        }
     }
 
 }
