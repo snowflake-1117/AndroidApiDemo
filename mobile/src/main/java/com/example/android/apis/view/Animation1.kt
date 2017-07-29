@@ -23,8 +23,8 @@ import com.example.android.apis.R
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import kotlinx.android.synthetic.main.animation_1.*
 
 class Animation1 : Activity(), View.OnClickListener {
 
@@ -32,13 +32,16 @@ class Animation1 : Activity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.animation_1)
 
-        val loginButton = findViewById<View>(R.id.login)
-        loginButton.setOnClickListener(this)
+        login.run {
+            setOnClickListener(this@Animation1)
+        }
     }
 
     override fun onClick(v: View) {
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
-        findViewById<View>(R.id.pw).startAnimation(shake)
+        pw.run {
+            startAnimation(shake)
+        }
     }
 
 }

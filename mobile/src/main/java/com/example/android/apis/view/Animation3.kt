@@ -28,7 +28,7 @@ import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
+import kotlinx.android.synthetic.main.animation_3.*
 
 class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
 
@@ -36,21 +36,19 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.animation_3)
 
-        val spinner = findViewById<View>(R.id.spinner) as Spinner
         ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, INTERPOLATORS).let {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = it
-            spinner.onItemSelectedListener = this
+            spinner.run { adapter = it }
+            spinner.run { onItemSelectedListener = this@Animation3 }
         }
     }
 
     override fun onItemSelected(parent: AdapterView<*>, v: View, position: Int, id: Long) {
-        val target = findViewById<View>(R.id.target)
-        val targetParent = target.parent as View
+        val targetParent = target.run { parent }
 
         val animation = TranslateAnimation(0.0f,
-                (targetParent.width - target.width - targetParent.paddingLeft -
+                (targetParent.width - target.run { width } - targetParent.paddingLeft -
                         targetParent.paddingRight).toFloat(), 0.0f, 0.0f).apply {
             duration = 1000
             startOffset = 300
