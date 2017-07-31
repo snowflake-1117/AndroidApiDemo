@@ -31,17 +31,12 @@ class Animation1 : Activity(), View.OnClickListener {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.animation_1)
-
-        login.run {
-            setOnClickListener(this@Animation1)
-        }
+        login.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
-        pw.run {
-            startAnimation(shake)
-        }
+        pw.startAnimation(shake)
     }
 
 }

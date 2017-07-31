@@ -46,8 +46,10 @@ class Animation2 : Activity(), AdapterView.OnItemSelectedListener {
         ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, mStrings).let {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.run { adapter = it }
-            spinner.run { onItemSelectedListener = this@Animation2 }
+            spinner.run {
+                adapter = it
+                onItemSelectedListener = this@Animation2
+            }
         }
     }
 

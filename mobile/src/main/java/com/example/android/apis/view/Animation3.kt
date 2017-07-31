@@ -39,8 +39,10 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
         ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, INTERPOLATORS).let {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.run { adapter = it }
-            spinner.run { onItemSelectedListener = this@Animation3 }
+            spinner.run {
+                adapter = it
+                onItemSelectedListener = this@Animation3
+            }
         }
     }
 
@@ -48,7 +50,7 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
         val targetParent = target.run { parent }
 
         val animation = TranslateAnimation(0.0f,
-                (targetParent.width - target.run { width } - targetParent.paddingLeft -
+                (targetParent.width - target.width - targetParent.paddingLeft -
                         targetParent.paddingRight).toFloat(), 0.0f, 0.0f).apply {
             duration = 1000
             startOffset = 300
@@ -79,6 +81,8 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>) {}
 
     companion object {
-        private val INTERPOLATORS = arrayOf("Accelerate", "Decelerate", "Accelerate/Decelerate", "Anticipate", "Overshoot", "Anticipate/Overshoot", "Bounce")
+        private val INTERPOLATORS = arrayOf("Accelerate", "Decelerate",
+                "Accelerate/Decelerate", "Anticipate", "Overshoot", "Anticipate/Overshoot",
+                "Bounce")
     }
 }

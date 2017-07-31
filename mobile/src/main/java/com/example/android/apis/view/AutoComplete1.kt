@@ -30,7 +30,7 @@ class AutoComplete1 : Activity() {
 
         val adapter = ArrayAdapter(this,
                 android.R.layout.simple_dropdown_item_1line, COUNTRIES)
-        edit.run { setAdapter(adapter) }
+        edit.setAdapter(adapter)
     }
 
     companion object {

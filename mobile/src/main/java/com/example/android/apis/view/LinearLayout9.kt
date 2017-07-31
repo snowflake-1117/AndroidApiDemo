@@ -32,10 +32,9 @@ class LinearLayout9 : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.linear_layout_9)
-        list.run {
-            adapter = ArrayAdapter(this@LinearLayout9,
-                    android.R.layout.simple_list_item_1, AutoComplete1.COUNTRIES)
-        }
+        list.adapter = ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, AutoComplete1.COUNTRIES)
+
     }
 
 }

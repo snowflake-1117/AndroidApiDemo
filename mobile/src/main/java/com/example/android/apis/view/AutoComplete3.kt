@@ -33,7 +33,7 @@ class AutoComplete3 : Activity() {
         val adapter = ArrayAdapter(this,
                 android.R.layout.simple_dropdown_item_1line,
                 AutoComplete1.COUNTRIES)
-        edit.run { setAdapter(adapter) }
-        edit2.run { setAdapter(adapter) }
+        edit.setAdapter(adapter)
+        edit2.setAdapter(adapter)
     }
 }
