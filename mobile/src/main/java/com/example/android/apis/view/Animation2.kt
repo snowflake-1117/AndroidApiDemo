@@ -54,33 +54,27 @@ class Animation2 : Activity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>, v: View, position: Int, id: Long) {
-        when (position) {
+        val (inAnim, outAnim) = when (position) {
 
             0 -> {
-                mFlipper.inAnimation = AnimationUtils.loadAnimation(this,
-                        R.anim.push_up_in)
-                mFlipper.outAnimation = AnimationUtils.loadAnimation(this,
-                        R.anim.push_up_out)
+                arrayOf(AnimationUtils.loadAnimation(this, R.anim.push_up_in)
+                        , AnimationUtils.loadAnimation(this, R.anim.push_up_out))
             }
             1 -> {
-                mFlipper.inAnimation = AnimationUtils.loadAnimation(this,
-                        R.anim.push_left_in)
-                mFlipper.outAnimation = AnimationUtils.loadAnimation(this,
-                        R.anim.push_left_out)
+                arrayOf(AnimationUtils.loadAnimation(this, R.anim.push_left_in)
+                        , AnimationUtils.loadAnimation(this, R.anim.push_left_out))
             }
             2 -> {
-                mFlipper.inAnimation = AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_in)
-                mFlipper.outAnimation = AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_out)
+                arrayOf(AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
+                        , AnimationUtils.loadAnimation(this, android.R.anim.fade_out))
             }
             else -> {
-                mFlipper.inAnimation = AnimationUtils.loadAnimation(this,
-                        R.anim.hyperspace_in)
-                mFlipper.outAnimation = AnimationUtils.loadAnimation(this,
-                        R.anim.hyperspace_out)
+                arrayOf(AnimationUtils.loadAnimation(this, R.anim.hyperspace_in)
+                        , AnimationUtils.loadAnimation(this, R.anim.hyperspace_out))
             }
         }
+        mFlipper.inAnimation = inAnim
+        mFlipper.outAnimation = outAnim
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {}
