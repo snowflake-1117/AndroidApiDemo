@@ -58,20 +58,20 @@ class Animation3 : Activity(), AdapterView.OnItemSelectedListener {
             repeatCount = Animation.INFINITE
         }
 
-        when (position) {
-            0 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
+         animation.interpolator = when (position) {
+            0 -> AnimationUtils.loadInterpolator(this,
                     android.R.anim.accelerate_interpolator)
-            1 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
+            1 -> AnimationUtils.loadInterpolator(this,
                     android.R.anim.decelerate_interpolator)
-            2 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
+            2 -> AnimationUtils.loadInterpolator(this,
                     android.R.anim.accelerate_decelerate_interpolator)
-            3 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
+            3 ->  AnimationUtils.loadInterpolator(this,
                     android.R.anim.anticipate_interpolator)
-            4 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
+            4 -> AnimationUtils.loadInterpolator(this,
                     android.R.anim.overshoot_interpolator)
-            5 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
+            5 -> AnimationUtils.loadInterpolator(this,
                     android.R.anim.anticipate_overshoot_interpolator)
-            6 -> animation.interpolator = AnimationUtils.loadInterpolator(this,
+            else -> AnimationUtils.loadInterpolator(this,
                     android.R.anim.bounce_interpolator)
         }
 
