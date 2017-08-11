@@ -16,43 +16,121 @@
 
 package com.example.android.apis.view
 
+import android.Manifest
 import com.example.android.apis.R
 
 import android.app.Activity
-import android.content.ContentResolver
-import android.content.Context
+import android.app.AlertDialog
+import android.content.*
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract.Contacts
+import android.provider.Settings
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AutoCompleteTextView
-import android.widget.CursorAdapter
-import android.widget.FilterQueryProvider
-import android.widget.Filterable
-import android.widget.TextView
+import android.widget.*
 
 class AutoComplete4 : Activity() {
+    val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.autocomplete_4)
 
-        val content = contentResolver
-        val cursor = content.query(Contacts.CONTENT_URI,
-                CONTACT_PROJECTION, null, null, null)
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
 
-        val adapter = ContactListAdapter(this, cursor)
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
 
-        val textView = findViewById<View>(R.id.edit) as AutoCompleteTextView
-        textView.setAdapter(adapter)
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.READ_CONTACTS),
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS)
+
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.READ_CONTACTS),
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS)
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    val content = contentResolver
+                    val cursor = content.query(Contacts.CONTENT_URI,
+                            CONTACT_PROJECTION, null, null, null)
+                    val adapter = ContactListAdapter(this, cursor)
+                    val textView = findViewById<View>(R.id.edit) as AutoCompleteTextView
+                    textView.setAdapter(adapter)
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    showRequestAgainDialog()
+                }
+                return
+            }
+        }// other 'case' lines to check for other
+        // permissions this app might request
+    }
+
+    /**
+     * When user denied READ_CONTACTS permission than show this dialog for persuasion.
+     */
+    private fun showRequestAgainDialog(): Unit {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage("This application need the permission.")
+        builder.setPositiveButton("setting") {
+            _, _ ->
+            try {
+                val intent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        .setData(Uri.parse("package:" + packageName))
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
+                val intent: Intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
+                startActivity(intent)
+            }
+        }
+        builder.setNegativeButton("cancel") {
+            _, _ ->
+            Toast.makeText(applicationContext, "Cancel", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+        builder.create()
+        builder.show()
     }
 
     // XXX compiler bug in javac 1.5.0_07-164, we need to implement Filterable
     // to make compilation work
     class ContactListAdapter(context: Context, c: Cursor) : CursorAdapter(context, c), Filterable {
         private val mContent: ContentResolver
+
         init {
             mContent = context.contentResolver
         }
