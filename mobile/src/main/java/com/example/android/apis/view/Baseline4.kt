@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package com.example.android.apis.view;
+package com.example.android.apis.view
 
-import com.example.android.apis.R;
+import com.example.android.apis.R
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.app.Activity
+import android.os.Bundle
 
 
 /**
  * Baseline alignment in LinearLayout with mixed gravities.
  */
-public class Baseline4 extends Activity {
+class Baseline4 : Activity() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.baseline_4);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.baseline_4)
     }
 }
