@@ -34,9 +34,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.autocomplete_5.*
 
 class AutoComplete4 : Activity() {
     val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1
+    lateinit var adapter: ContactListAdapter
+    lateinit var cursor: Cursor
+    lateinit var content: ContentResolver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +61,6 @@ class AutoComplete4 : Activity() {
                 ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.READ_CONTACTS),
                         MY_PERMISSIONS_REQUEST_READ_CONTACTS)
-
-
             } else {
 
                 // No explanation needed, we can request the permission.
@@ -71,6 +73,9 @@ class AutoComplete4 : Activity() {
                 // result of the request.
             }
         }
+        else {
+            autoCompleteContacts()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -79,15 +84,9 @@ class AutoComplete4 : Activity() {
             MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    val content = contentResolver
-                    val cursor = content.query(Contacts.CONTENT_URI,
-                            CONTACT_PROJECTION, null, null, null)
-                    val adapter = ContactListAdapter(this, cursor)
-                    val textView = findViewById<View>(R.id.edit) as AutoCompleteTextView
-                    textView.setAdapter(adapter)
+                    autoCompleteContacts()
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -97,6 +96,14 @@ class AutoComplete4 : Activity() {
             }
         }// other 'case' lines to check for other
         // permissions this app might request
+    }
+
+    fun autoCompleteContacts(){
+        content = contentResolver
+        cursor = content.query(Contacts.CONTENT_URI,
+                CONTACT_PROJECTION, null, null, null)
+        adapter = ContactListAdapter(this, cursor, 0)
+        edit.setAdapter(adapter)
     }
 
     /**
@@ -128,12 +135,8 @@ class AutoComplete4 : Activity() {
 
     // XXX compiler bug in javac 1.5.0_07-164, we need to implement Filterable
     // to make compilation work
-    class ContactListAdapter(context: Context, c: Cursor) : CursorAdapter(context, c), Filterable {
-        private val mContent: ContentResolver
-
-        init {
-            mContent = context.contentResolver
-        }
+    class ContactListAdapter(context: Context, c: Cursor, flags: Int) : CursorAdapter(context, c, flags), Filterable {
+        private val mContent: ContentResolver = context.contentResolver
 
         override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
             val inflater = LayoutInflater.from(context)
