@@ -34,14 +34,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import kotlinx.android.synthetic.main.autocomplete_5.*
+import kotlinx.android.synthetic.main.autocomplete_4.*
 
 class AutoComplete4 : Activity() {
-    val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1
-    lateinit var adapter: ContactListAdapter
-    lateinit var cursor: Cursor
-    lateinit var content: ContentResolver
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.autocomplete_4)
@@ -103,10 +98,10 @@ class AutoComplete4 : Activity() {
     }
 
     fun autoCompleteContacts(){
-        content = contentResolver
-        cursor = content.query(Contacts.CONTENT_URI,
+        val content = contentResolver
+        val cursor = content.query(Contacts.CONTENT_URI,
                 CONTACT_PROJECTION, null, null, null)
-        adapter = ContactListAdapter(this, cursor, 0)
+        val adapter = ContactListAdapter(this, cursor, 0)
         edit.setAdapter(adapter)
     }
 
@@ -172,9 +167,8 @@ class AutoComplete4 : Activity() {
     }
 
     companion object {
-
         val CONTACT_PROJECTION = arrayOf(Contacts._ID, Contacts.DISPLAY_NAME)
-
         private val COLUMN_DISPLAY_NAME = 1
+        val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1
     }
 }
