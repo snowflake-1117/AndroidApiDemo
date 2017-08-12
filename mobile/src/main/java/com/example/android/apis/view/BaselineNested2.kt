@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package com.example.android.apis.view;
+package com.example.android.apis.view
 
-import com.example.android.apis.R;
+import com.example.android.apis.R
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.app.Activity
+import android.os.Bundle
 
 /**
- * Baseline alignment includes elements within nested vertical
- * {@link android.widget.LinearLayout}s.
+ * Baseline alignment includes an element within a nested horizontal
+ * [android.widget.LinearLayout].
  */
-public class BaselineNested1 extends Activity {
+class BaselineNested2 : Activity() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.baseline_nested_1);
+        setContentView(R.layout.baseline_nested_2)
     }
 }
