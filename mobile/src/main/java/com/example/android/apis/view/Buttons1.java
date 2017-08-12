@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package com.example.android.apis.view
+package com.example.android.apis.view;
 
 // Need the following import to get access to the app resources, since this
 // class is in a sub-package.
-import com.example.android.apis.R
+import com.example.android.apis.R;
 
-import android.app.Activity
-import android.os.Bundle
+import android.app.Activity;
+import android.os.Bundle;
 
 /**
  * A gallery of the different styles of buttons.
  */
-class Buttons1 : Activity() {
+public class Buttons1 extends Activity {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.buttons_1)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.buttons_1);
     }
 }
