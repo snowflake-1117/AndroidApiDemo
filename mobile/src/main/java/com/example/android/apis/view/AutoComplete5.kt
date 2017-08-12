@@ -43,11 +43,13 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.autocomplete_5.*
 
 class AutoComplete5 : Activity() {
+    val contactPermission: ContactPermission = ContactPermission()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.autocomplete_5)
 
-        checkPermission()
+        contactPermission.checkPermission(this, this, edit, contentResolver)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -58,7 +60,7 @@ class AutoComplete5 : Activity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    autoCompleteContacts()
+                    contactPermission.autoCompleteContacts(this, edit, contentResolver)
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -70,50 +72,10 @@ class AutoComplete5 : Activity() {
         // permissions this app might request
     }
 
-    fun checkPermission() {
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_CONTACTS)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.READ_CONTACTS),
-                        AutoComplete4.MY_PERMISSIONS_REQUEST_READ_CONTACTS)
-            } else {
-
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.READ_CONTACTS),
-                        AutoComplete4.MY_PERMISSIONS_REQUEST_READ_CONTACTS)
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        } else {
-            autoCompleteContacts()
-        }
-    }
-
-    fun autoCompleteContacts() {
-        val content = contentResolver
-        val cursor = content.query(Contacts.CONTENT_URI,
-                AutoComplete4.CONTACT_PROJECTION, null, null, null)
-        val adapter = AutoComplete4.ContactListAdapter(this, cursor, 0)
-        edit.setAdapter(adapter)
-    }
-
     /**
      * When user denied READ_CONTACTS permission than show this dialog for persuasion.
      */
-    private fun showRequestAgainDialog(): Unit {
+    fun showRequestAgainDialog(): Unit {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setMessage(R.string.autocomplete_5_showRequestAgainDialog)
         builder.setPositiveButton(R.string.autocomplete_5_setPositiveButton) {
@@ -135,4 +97,5 @@ class AutoComplete5 : Activity() {
         builder.create()
         builder.show()
     }
+
 }

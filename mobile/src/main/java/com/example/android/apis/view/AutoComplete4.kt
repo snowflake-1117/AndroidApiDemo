@@ -26,6 +26,7 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
@@ -37,11 +38,13 @@ import android.widget.*
 import kotlinx.android.synthetic.main.autocomplete_4.*
 
 class AutoComplete4 : Activity() {
+    val contactPermission: ContactPermission = ContactPermission()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.autocomplete_4)
 
-        checkPermission()
+        contactPermission.checkPermission(this, this, edit, contentResolver)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -52,7 +55,7 @@ class AutoComplete4 : Activity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    autoCompleteContacts()
+                    contactPermission.autoCompleteContacts(this, edit, contentResolver)
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -64,51 +67,10 @@ class AutoComplete4 : Activity() {
         // permissions this app might request
     }
 
-    fun checkPermission() {
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_CONTACTS)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.READ_CONTACTS),
-                        MY_PERMISSIONS_REQUEST_READ_CONTACTS)
-            } else {
-
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.READ_CONTACTS),
-                        MY_PERMISSIONS_REQUEST_READ_CONTACTS)
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
-        else {
-            autoCompleteContacts()
-        }
-    }
-
-    fun autoCompleteContacts(){
-        val content = contentResolver
-        val cursor = content.query(Contacts.CONTENT_URI,
-                CONTACT_PROJECTION, null, null, null)
-        val adapter = ContactListAdapter(this, cursor, 0)
-        edit.setAdapter(adapter)
-    }
-
     /**
      * When user denied READ_CONTACTS permission than show this dialog for persuasion.
      */
-    private fun showRequestAgainDialog(): Unit {
+    fun showRequestAgainDialog(): Unit {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setMessage(R.string.autocomplete_4_showRequestAgainDialog)
         builder.setPositiveButton(R.string.autocomplete_4_setPositiveButton) {
@@ -153,20 +115,20 @@ class AutoComplete4 : Activity() {
         }
 
         override fun runQueryOnBackgroundThread(constraint: CharSequence?): Cursor {
-            val filter:FilterQueryProvider? = filterQueryProvider
+            val filter: FilterQueryProvider? = filterQueryProvider
             if (filter != null) {
-                return if(constraint != null) filter.runQuery(constraint) else filter.runQuery("")
+                return if (constraint != null) filter.runQuery(constraint) else filter.runQuery("")
             }
 
             val uri = Uri.withAppendedPath(
-                    Contacts.CONTENT_FILTER_URI,
+                    ContactsContract.Contacts.CONTENT_FILTER_URI,
                     Uri.encode(constraint.toString()))
             return mContent.query(uri, CONTACT_PROJECTION, null, null, null)
         }
     }
 
     companion object {
-        val CONTACT_PROJECTION = arrayOf(Contacts._ID, Contacts.DISPLAY_NAME)
+        val CONTACT_PROJECTION = arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME)
         private val COLUMN_DISPLAY_NAME = 1
         val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1
     }
