@@ -134,7 +134,7 @@ class AutoComplete4 : Activity() {
     // XXX compiler bug in javac 1.5.0_07-164, we need to implement Filterable
     // to make compilation work
     class ContactListAdapter(context: Context, c: Cursor, flags: Int) : CursorAdapter(context, c, flags), Filterable {
-        private val mContent: ContentResolver = context.contentResolver
+        private var mContent: ContentResolver = context.contentResolver
 
         override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
             val inflater = LayoutInflater.from(context)
@@ -144,7 +144,7 @@ class AutoComplete4 : Activity() {
             return view
         }
 
-        override fun bindView(view: View, context: Context, cursor: Cursor) {
+        override fun bindView(view: View, context: Context?, cursor: Cursor) {
             (view as TextView).text = cursor.getString(COLUMN_DISPLAY_NAME)
         }
 
@@ -152,10 +152,10 @@ class AutoComplete4 : Activity() {
             return cursor.getString(COLUMN_DISPLAY_NAME)
         }
 
-        override fun runQueryOnBackgroundThread(constraint: CharSequence): Cursor {
-            val filter = filterQueryProvider
+        override fun runQueryOnBackgroundThread(constraint: CharSequence?): Cursor {
+            val filter:FilterQueryProvider? = filterQueryProvider
             if (filter != null) {
-                return filter.runQuery(constraint)
+                return if(constraint != null) filter.runQuery(constraint) else filter.runQuery("")
             }
 
             val uri = Uri.withAppendedPath(
