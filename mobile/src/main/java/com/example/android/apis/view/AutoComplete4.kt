@@ -110,8 +110,8 @@ class AutoComplete4 : Activity() {
      */
     private fun showRequestAgainDialog(): Unit {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setMessage("This application need the permission.")
-        builder.setPositiveButton("setting") {
+        builder.setMessage(R.string.autocomplete_4_showRequestAgainDialog)
+        builder.setPositiveButton(R.string.autocomplete_4_setPositiveButton) {
             _, _ ->
             try {
                 val intent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -123,9 +123,8 @@ class AutoComplete4 : Activity() {
                 startActivity(intent)
             }
         }
-        builder.setNegativeButton("cancel") {
+        builder.setNegativeButton(R.string.autocomplete_4_setNegativeButton) {
             _, _ ->
-            Toast.makeText(applicationContext, "Cancel", Toast.LENGTH_SHORT).show()
             finish()
         }
         builder.create()

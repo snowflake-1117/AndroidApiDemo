@@ -1194,9 +1194,15 @@
     <string name="autocomplete_4_instructions">Type in the text field for auto-completion.</string>
     <string name="autocomplete_4_name">Name:</string>
     <string name="autocomplete_4_message">You must have contacts in your address book. Typing * will show all of your contacts.</string>
+    <string name="autocomplete_4_showRequestAgainDialog">This application need contact permission.</string>
+    <string name="autocomplete_4_setPositiveButton">setting</string>
+    <string name="autocomplete_4_setNegativeButton">cancel</string>
     <string name="autocomplete_5_instructions">Type in the text field for auto-completion.</string>
     <string name="autocomplete_5_hint">Typing * will show all of your contacts.</string>
     <string name="autocomplete_5_name">Name:</string>
+    <string name="autocomplete_5_showRequestAgainDialog">This application need contact permission.</string>
+    <string name="autocomplete_5_setPositiveButton">setting</string>
+    <string name="autocomplete_5_setNegativeButton">cancel</string>
     <string name="autocomplete_6_to">To:</string>
     <string name="autocomplete_6_to_hint">To</string>
     <string name="autocomplete_6_subject">Subject:</string>
