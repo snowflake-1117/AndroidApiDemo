@@ -30,17 +30,15 @@ import android.widget.SimpleCursorAdapter
  * data comes from a cursor.
  */
 class List2 : ListActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+
     // Get a cursor with all people
-    private lateinit var mCursor: Cursor
-    private lateinit var mAdapter: SimpleCursorAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        mCursor = contentResolver.query(Contacts.CONTENT_URI,
+    private val mCursor: Cursor by lazy {
+        contentResolver.query(Contacts.CONTENT_URI,
                 CONTACT_PROJECTION, null, null, null)
+    }
 
-        mAdapter = SimpleCursorAdapter(this,
+    private val mAdapter: SimpleCursorAdapter by lazy {
+        SimpleCursorAdapter(this@List2,
                 // Use a template that displays a text view
                 android.R.layout.simple_list_item_1,
                 // Give the cursor to the list adatper
@@ -50,6 +48,10 @@ class List2 : ListActivity(), LoaderManager.LoaderCallbacks<Cursor> {
                 // The "text1" view defined in the XML template
                 intArrayOf(android.R.id.text1),
                 0)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         listAdapter = mAdapter
 
@@ -57,7 +59,7 @@ class List2 : ListActivity(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-        return CursorLoader(this@List2, Contacts.CONTENT_URI, CONTACT_PROJECTION, null, null, null)
+        return CursorLoader(this@List2, Contacts.CONTENT_URI, CONTACT_PROJECTION, null, null, null);
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>?, cursor: Cursor?) {
