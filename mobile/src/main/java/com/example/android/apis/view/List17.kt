@@ -14,44 +14,42 @@
  * limitations under the License.
  */
 
-package com.example.android.apis.view;
+package com.example.android.apis.view
 
-import android.app.ListActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.app.ListActivity
+import android.os.Bundle
+import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.ListView
 
 
 /**
  * A list view where the last item the user clicked is placed in
  * the "activated" state, causing its background to highlight.
  */
-public class List17 extends ListActivity {
+class List17 : ListActivity() {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // Use the built-in layout for showing a list item with a single
         // line of text whose background is changes when activated.
-        setListAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_activated_1, mStrings));
-        getListView().setTextFilterEnabled(true);
-        
+        listAdapter = ArrayAdapter(this,
+                android.R.layout.simple_list_item_activated_1, mStrings)
+        listView.isTextFilterEnabled = true
+
         // Tell the list view to show one checked/activated item at a time.
-        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        
+        listView.choiceMode = ListView.CHOICE_MODE_SINGLE
+
         // Start with first item activated.
         // Make the newly clicked item the currently selected one.
-        getListView().setItemChecked(0, true);
+        listView.setItemChecked(0, true)
     }
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
+    override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
         // Make the newly clicked item the currently selected one.
-        getListView().setItemChecked(position, true);
+        listView.setItemChecked(position, true)
     }
 
-    private String[] mStrings = Cheeses.sCheeseStrings;
+    private val mStrings = Cheeses.sCheeseStrings
 }
