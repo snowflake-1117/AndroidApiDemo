@@ -25,6 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.AbsListView
 import kotlinx.android.synthetic.main.list_8.*
@@ -85,7 +86,7 @@ class List8 : ListActivity() {
             return position.toLong()
         }
 
-        override fun getView(position: Int, convertView: View, parent: ViewGroup): View =
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View =
                 // Make an ImageView to show a photo
                 ImageView(mContext).apply {
                     setImageResource(mPhotos[position])
