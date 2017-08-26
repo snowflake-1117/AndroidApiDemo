@@ -22,7 +22,6 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 
-
 /**
  * A list view where the last item the user clicked is placed in
  * the "activated" state, causing its background to highlight.
@@ -36,14 +35,17 @@ class List17 : ListActivity() {
         // line of text whose background is changes when activated.
         listAdapter = ArrayAdapter(this,
                 android.R.layout.simple_list_item_activated_1, mStrings)
-        listView.isTextFilterEnabled = true
 
-        // Tell the list view to show one checked/activated item at a time.
-        listView.choiceMode = ListView.CHOICE_MODE_SINGLE
+        listView.apply {
+            isTextFilterEnabled = true
 
-        // Start with first item activated.
-        // Make the newly clicked item the currently selected one.
-        listView.setItemChecked(0, true)
+            // Tell the list view to show one checked/activated item at a time.
+            choiceMode = ListView.CHOICE_MODE_SINGLE
+
+            // Start with first item activated.
+            // Make the newly clicked item the currently selected one.
+            listView.setItemChecked(0, true)
+        }
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
